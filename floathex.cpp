@@ -248,8 +248,8 @@ qDebug() << "Convertion"<<szDataType;
         sscanf( szLineBuf, "%f",  &m_fVal );
         p = (unsigned char *)&m_fVal;
 
-        sprintf_s(m_szHexBuf, "%02x %02x %02x %02x",
-                  *p, *(p+1), *(p+2), *(p+3));
+        sprintf(m_szHexBuf, "%02x %02x %02x %02x",
+                *p, *(p+1), *(p+2), *(p+3));
         break;
     case 1://byte
     case 2://byte ->

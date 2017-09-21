@@ -307,14 +307,14 @@ bool Scale::Convertion(char *szLineBuf, int szDataType)
                 num=strtol(szLineBuf,&e,2);
                 char buf[9] = "";
                 m_Decimal = QString::number( num );
-                itoa(num,buf,16);
+                public_itoa(num,buf,16);
                 m_hex = QString( buf );
-                itoa(num,buf,8);
+                public_itoa(num,buf,8);
                 m_Octal = QString( buf );
-                itoa(num,buf,2);
+                public_itoa(num,buf,2);
                 m_Binary = QString( buf );
                 bool ok;
-                itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
+                public_itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
                 m_Other = QString( buf );
             }
             break;
@@ -326,14 +326,14 @@ bool Scale::Convertion(char *szLineBuf, int szDataType)
                 buf[0] = num;
                 m_Other = QString( buf );
                 m_Decimal = QString::number( num );
-                itoa(num,buf,16);
+                public_itoa(num,buf,16);
                 m_hex = QString( buf );
-                itoa(num,buf,8);
+                public_itoa(num,buf,8);
                 m_Octal = QString( buf );
-                itoa(num,buf,2);
+                public_itoa(num,buf,2);
                 m_Binary = QString( buf );
                 bool ok;
-                itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
+                public_itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
                 m_Other = QString( buf );
             }
             break;
@@ -344,14 +344,14 @@ bool Scale::Convertion(char *szLineBuf, int szDataType)
                 buf[0] = num;
                 m_Other = QString( buf );
                 m_Decimal = QString::number( num );
-                itoa(num,buf,16);
+                public_itoa(num,buf,16);
                 m_hex = QString( buf );
-                itoa(num,buf,8);
+                public_itoa(num,buf,8);
                 m_Octal = QString( buf );
-                itoa(num,buf,2);
+                public_itoa(num,buf,2);
                 m_Binary = QString( buf );
                 bool ok;
-                itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
+                public_itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
                 m_Other = QString( buf );
 
             }
@@ -364,14 +364,14 @@ bool Scale::Convertion(char *szLineBuf, int szDataType)
                 buf[0] = num;
                 m_Other = QString( buf );
                 m_Decimal = QString::number( num );
-                itoa(num,buf,16);
+                public_itoa(num,buf,16);
                 m_hex = QString( buf );
-                itoa(num,buf,8);
+                public_itoa(num,buf,8);
                 m_Octal = QString( buf );
-                itoa(num,buf,2);
+                public_itoa(num,buf,2);
                 m_Binary = QString( buf );
                 bool ok;
-                itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
+                public_itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
                 m_Other = QString( buf );
             }
             break;
@@ -384,13 +384,13 @@ bool Scale::Convertion(char *szLineBuf, int szDataType)
                 buf[0] = num;
                 m_Other = QString( buf );
                 m_Decimal = QString::number( num );
-                itoa(num,buf,16);
+                public_itoa(num,buf,16);
                 m_hex = QString( buf );
-                itoa(num,buf,8);
+                public_itoa(num,buf,8);
                 m_Octal = QString( buf );
-                itoa(num,buf,2);
+                public_itoa(num,buf,2);
                 m_Binary = QString( buf );
-                itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
+                public_itoa(num,buf, m_convertToBox->currentText().toInt( &ok, 10));
                 m_Other = QString( buf );
             }
             break;

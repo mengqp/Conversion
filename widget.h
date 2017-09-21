@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QString>
 
+#include "public.h"
 #include "floathex.h"
 #include "asc.h"
 #include "scale.h"

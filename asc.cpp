@@ -1,5 +1,6 @@
 #include "asc.h"
 #include "widget.h"
+#include <stdlib.h>
 
 ASC::ASC(QWidget *parent) : QWidget(parent)
 {
@@ -305,19 +306,19 @@ bool ASC::Convertion(char *szLineBuf, int szDataType)
             char *p = buf;
             for (int i = 0; i < buf_len; i++)
             {
-                itoa( szLineBuf[i], p, 2);
+                public_itoa( szLineBuf[i], p, 2);
                 strcat(b_str, p );
                 strcat(b_str, m_SeparatorBuf );
 
-                itoa( szLineBuf[i], p, 8);
+                public_itoa( szLineBuf[i], p, 8);
                 strcat(o_str, p );
                 strcat(o_str, m_SeparatorBuf );
 
-                itoa( szLineBuf[i], p, 10);
+                public_itoa( szLineBuf[i], p, 10);
                 strcat(d_str, p );
                 strcat(d_str, m_SeparatorBuf );
 
-                itoa( szLineBuf[i], p, 16);
+                public_itoa( szLineBuf[i], p, 16);
                 strcat(hex_str, p );
                 strcat(hex_str, m_SeparatorBuf );
             }
@@ -338,11 +339,11 @@ bool ASC::Convertion(char *szLineBuf, int szDataType)
             buf[0] = num;
             m_str = QString( buf );
             m_Decimal = QString::number( num );
-            itoa(num,buf,16);
+            public_itoa(num,buf,16);
             m_hex = QString( buf );
-            itoa(num,buf,8);
+            public_itoa(num,buf,8);
             m_Octal = QString( buf );
-            itoa(num,buf,2);
+            public_itoa(num,buf,2);
             m_Binary = QString( buf );
 
         }
@@ -355,11 +356,11 @@ bool ASC::Convertion(char *szLineBuf, int szDataType)
             buf[0] = num;
             m_str = QString( buf );
             m_Decimal = QString::number( num );
-            itoa(num,buf,16);
+            public_itoa(num,buf,16);
             m_hex = QString( buf );
-            itoa(num,buf,8);
+            public_itoa(num,buf,8);
             m_Octal = QString( buf );
-            itoa(num,buf,2);
+            public_itoa(num,buf,2);
             m_Binary = QString( buf );
         }
         break;
