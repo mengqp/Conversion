@@ -1,0 +1,9 @@
+#+TITLE: 转化数据工具
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="../../css/readtheorg.css" />
+#+OPTIONS: ^:nil
+
+
+* Table of Contents                                         :TOC_4_org:noexport:
+
+* 描述
+  这是用qt开发的一个小程序，用来转化我日常工作中的一些小数据。
