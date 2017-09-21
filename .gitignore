@@ -1,0 +1,6 @@
+debug
+release
+*.user
+cscope.*
+Makefile
+Makefile.*
