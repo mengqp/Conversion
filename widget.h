@@ -22,12 +22,13 @@ class Widget : public QWidget
     ~Widget();
 
   private:
+    // 主界面的tabWidget
     QTabWidget *m_pTab;
-
+    // 点击显示浮点数与16进制转化的界面
     floathex *m_pFloatHex;
-
+    // 点击显示ASCII码与数字之间转化的界面
     ASC *m_pAsc;
-
+    // 点击显示进制之间转化的界面
     Scale *m_pScale;
 
   private:

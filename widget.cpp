@@ -68,6 +68,7 @@ void Widget::InitUi(void)
     }
     m_pTab->setGeometry(0,0,800,600);
 
+    // 创建浮点数与16进制转化的界面
     m_pFloatHex = new floathex( this );
     if ( NULL == m_pFloatHex )
     {
@@ -76,7 +77,7 @@ void Widget::InitUi(void)
     m_pFloatHex->setGeometry(0,0,350,200);
     m_pTab->addTab( m_pFloatHex, FROMLOCAL("浮点数16进制"));
 
-    //新建第二个页面的部件
+    // 创建ASC码与数字转化的界面
     m_pAsc = new ASC(this);
     if ( NULL == m_pAsc )
     {
@@ -85,7 +86,7 @@ void Widget::InitUi(void)
     m_pAsc->setGeometry(0,0,350,200);
     m_pTab->addTab( m_pAsc, FROMLOCAL("ASCII"));
 
-    //新建第3个页面的部件
+    // 创建进制之间转化的界面
     m_pScale = new Scale(this);
     if ( NULL == m_pScale )
     {
@@ -93,10 +94,5 @@ void Widget::InitUi(void)
     }
     m_pScale->setGeometry(0, 0, 350, 200);
     m_pTab->addTab( m_pScale, FROMLOCAL("进制"));
-
-
-
-
-
 
 }   /*-------- end class Widget method InitUi -------- */

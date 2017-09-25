@@ -89,3 +89,8 @@ private:
 };
 
 #endif // ASC_H
+
+// This file is set to c + + mode when you set the following content to the bottom and reopen the file
+// Local Variables:
+// mode: c++
+// End:

@@ -12,37 +12,83 @@ floathex::floathex(QWidget *parent)
 
 floathex::~floathex()
 {
-    delete m_dataFloatLabel;
-    delete m_dataHexLabel;
+    if( NULL != m_dataFloatLabel )
+    {
+        delete m_dataFloatLabel;
+        m_dataFloatLabel = NULL;
+    }
 
-    delete m_HexSelButtonGroup;
-   // delete m_ByteSelButtonGroup;
-   // delete m_ByteButton;
-   // delete m_WordButton;
-   // delete m_DwordButton;
-    delete m_dataFlaotButton;
-    delete m_dataHexButton;
-    delete m_dataHexAButton;
-    delete m_dataHexBButton;
+    if( NULL != m_dataHexLabel )
+    {
+        delete m_dataHexLabel;
+        m_dataHexLabel = NULL;
+    }
 
-    delete  m_dataWriteEdit;
-    delete  m_dataFloatEdit;
-    delete  m_dataHexEdit;
+    if( NULL != m_HexSelButtonGroup )
+    {
+        delete m_HexSelButtonGroup;
+        m_HexSelButtonGroup = NULL;
+    }
 
-    delete m_converButton;
+    if( NULL != m_dataFloatButton )
+    {
+        delete m_dataFloatButton;
+        m_dataFloatButton = NULL;
+    }
 
+    if( NULL != m_dataHexButton )
+    {
+        delete m_dataHexButton;
+        m_dataHexButton = NULL;
+    }
 
+    if( NULL != m_dataHexBButton )
+    {
+        delete m_dataHexBButton;
+        m_dataHexBButton = NULL;
+    }
 
+    if( NULL !=  m_dataHexAButton )
+    {
+        delete  m_dataHexAButton;
+        m_dataHexAButton = NULL;
+    }
+
+    if( NULL != m_dataWriteEdit )
+    {
+        delete m_dataWriteEdit;
+        m_dataWriteEdit = NULL;
+    }
+
+    if( NULL != m_dataFloatEdit )
+    {
+        delete m_dataFloatEdit;
+        m_dataFloatEdit = NULL;
+    }
+
+    if( NULL != m_dataHexEdit )
+    {
+        delete m_dataHexEdit;
+        m_dataHexEdit = NULL;
+    }
+
+    if( NULL != m_converButton )
+    {
+        delete m_converButton;
+        m_converButton = NULL;
+    }
+
+    if( NULL != m_pRegExp )
+    {
+        delete m_pRegExp;
+        m_pRegExp = NULL;
+    }
     delete m_pRegExp;
-
-    //delete m_clearWriteButton;
 }
 
 
 bool floathex::InitUi()
 {
-
-
     //创建控件 Label
     m_dataFloatLabel = new QLabel(this);
     m_dataFloatLabel->setGeometry(50,100,200,20);
@@ -55,25 +101,11 @@ bool floathex::InitUi()
 
     //创建 QRadioButton
     m_HexSelButtonGroup = new QButtonGroup(this);
-   // m_ByteSelButtonGroup = new QButtonGroup(this);
 
-
-    /*m_DwordButton = new QRadioButton(this);
-    m_DwordButton->setGeometry(50,0,50,20);
-    m_DwordButton->setText(FROMLOCAL("双字"));
-
-    m_WordButton = new QRadioButton(this);
-    m_WordButton->setGeometry(150,0,50,20);
-    m_WordButton->setText(FROMLOCAL("单字"));
-
-    m_ByteButton = new QRadioButton(this);
-    m_ByteButton->setGeometry(100,0,50,20);
-    m_ByteButton->setText(FROMLOCAL("字节"));*/
-
-    m_dataFlaotButton = new QRadioButton(this);
-    m_dataFlaotButton->setGeometry(50,20,50,20);
-    m_dataFlaotButton->setText(FROMLOCAL("浮点"));
-    m_dataFlaotButton->click();
+    m_dataFloatButton = new QRadioButton(this);
+    m_dataFloatButton->setGeometry(50,20,50,20);
+    m_dataFloatButton->setText(FROMLOCAL("浮点"));
+    m_dataFloatButton->click();
 
 
     m_dataHexButton = new QRadioButton(this);
@@ -127,7 +159,7 @@ void floathex::InitUiFeature()
     this->setFixedSize(350,200);
 
     //设置 QRadioButton
-    connect(m_dataFlaotButton,SIGNAL(clicked(bool)),
+    connect(m_dataFloatButton,SIGNAL(clicked(bool)),
             this,SLOT(radioChange()));
     connect(m_dataHexButton,SIGNAL(clicked(bool)),
             this,SLOT(radioChange()));
@@ -185,7 +217,7 @@ void floathex::FuncConvertion()
 
 void floathex::radioChange()
 {
-    if(sender() == m_dataFlaotButton)
+    if(sender() == m_dataFloatButton)
     {
         m_iRadioId = 0;
         m_dataHexAButton->hide();
