@@ -10,6 +10,7 @@
 #include "floathex.h"
 #include "asc.h"
 #include "scale.h"
+#include "check.h"
 
 #define FROMLOCAL(a) QString::fromUtf8(a)
 
@@ -30,12 +31,20 @@ class Widget : public QWidget
     ASC *m_pAsc;
     // 点击显示进制之间转化的界面
     Scale *m_pScale;
+    // 点击显示校验界面
+    CCheck *m_pCheck;
 
+  public:
+    // 消息盒子
+    void MsgBox( QString str );
   private:
     // 初始化界面
     void InitUi();
-    // 消息盒子
-    void MsgBox( QString str );
 };
 
 #endif // WIDGET_H
+
+// This file is set to c + + mode when you set the following content to the bottom and reopen the file
+// Local Variables:
+// mode: c++
+// End:

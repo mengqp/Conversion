@@ -8,6 +8,12 @@ Widget::Widget(QWidget *parent)
 
 Widget::~Widget()
 {
+    if( NULL != m_pCheck )
+    {
+        delete m_pCheck;
+        m_pCheck = NULL;
+    }
+
     if( NULL != m_pScale )
     {
         delete m_pScale;
@@ -25,7 +31,6 @@ Widget::~Widget()
         delete m_pFloatHex;
         m_pFloatHex = NULL;
     }
-
 
     if( NULL != m_pTab )
     {
@@ -94,5 +99,13 @@ void Widget::InitUi(void)
     }
     m_pScale->setGeometry(0, 0, 350, 200);
     m_pTab->addTab( m_pScale, FROMLOCAL("进制"));
+
+    // 创建校验界面
+    m_pCheck = new CCheck(this);
+    if ( NULL == m_pCheck )
+    {
+        MsgBox( "CCheck new error ");
+    }
+    m_pTab->addTab( m_pCheck, FROMLOCAL("校验"));
 
 }   /*-------- end class Widget method InitUi -------- */
