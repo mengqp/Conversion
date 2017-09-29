@@ -746,9 +746,10 @@ QString CCheck::GetModbusCrcString(unsigned char *pBuf, unsigned int iBufLen )
 
     QString sep = GetSepString( );
     QString str = sep
-                  +QString::number( ( CRC ) & 0xff, 16 )
+                  + QString("%1").arg( ( CRC ) & 0xff, 2, 16, QChar('0'))
                   +sep
-                  + QString::number( ( CRC >> 8 ) & 0xff, 16 );
+                  + QString("%1").arg( ( CRC >> 8 ) & 0xff, 2, 16, QChar('0'))
+                  ;
 
     return str;
 }   /*-------- end class CCheck method GetModbusCrcString -------- */
@@ -777,7 +778,7 @@ QString CCheck::GetSumString(unsigned char *pBuf, unsigned int iBufLen)
 	}
 
     QString sep = GetSepString( );
-    str = sep + QString::number( byRtn, 16 );
+    str = sep + QString("%1").arg( byRtn, 2, 16, QChar('0'));
     return str;
 }   /*-------- end class CCheck method GetSumString -------- */
 
@@ -806,7 +807,7 @@ QString CCheck::GetSumNeGateString(unsigned char *pBuf, unsigned int iBufLen)
 
     QString sep = GetSepString( );
     unsigned char byRtnNegate = ~byRtn;
-    str = sep + QString::number( byRtnNegate, 16 );
+    str = sep + QString("%1").arg( byRtnNegate, 2, 16, QChar('0'));
 
     return str;
 }   /*-------- end class CCheck method GetSumNeGateString -------- */
