@@ -630,9 +630,10 @@ QString CCheck::GetConvertString(void)
         {
             bool ok;
             QString s = list.at(i );
+            unsigned char tmp = s.toInt(&ok,16);
             if ( ok )
             {
-                pBuf[iBufLen++] = s.toInt(&ok,16);
+                pBuf[iBufLen++] = tmp;
                 // printf("%2x \n", pBuf[i]);
             }
         }
@@ -660,9 +661,10 @@ QString CCheck::GetConvertString(void)
                 s = str.mid( mid, 2);
             }
 
+            unsigned char tmp = s.toInt(&ok,16);
             if ( ok )
             {
-                pBuf[iBufLen++] = s.toInt(&ok,16);
+                pBuf[iBufLen++] = tmp;
                 // printf("%2x \n", pBuf[i]);
             }
         }
