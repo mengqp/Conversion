@@ -81,6 +81,18 @@ class CCheck : public QWidget
     QString GetSepString( void );
     // 获取模式报文
     QString GetModeString( void );
+    // 转化功能函数
+    QString GetConvertString( void );
+
+  private:
+    // 获取校验后的str
+    QString GetConvertCheckString( unsigned char *pBuf, unsigned int iBufLen );
+    // 获取校验后的modbus str
+    QString GetModbusCrcString( unsigned char *pBuf, unsigned int iBufLen );
+    // 获取校验后的累加和 str
+    QString GetSumString( unsigned char *pBuf, unsigned int iBufLen );
+    // 获取校验后的累加和取反 str
+    QString GetSumNeGateString( unsigned char *pBuf, unsigned int iBufLen );
 
   private:  // ui
     // 分隔符
@@ -118,8 +130,6 @@ class CCheck : public QWidget
     unsigned int m_sep;  // 分隔符
     unsigned int m_mode; // 显示模式
     unsigned int m_check;  // 校验方式
-
-    // QRegExp m_regExp;  //  正则全局变量，用来限定相应输入模式下的正则规则
 
 
 

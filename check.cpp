@@ -15,8 +15,10 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 #include <QTextCursor>
+#include <QStringList>
 #include "check.h"
 #include "widget.h"
+
 
 const unsigned int RADIO_SEP_SPACE = 0x01;  // 空格分隔符
 const unsigned int RADIO_SEP_NULL = 0x02;  // 无分隔符
@@ -478,14 +480,6 @@ void CCheck::RadioChangeSlot(void)
  ******************************************************************************/
 void CCheck::ConvertionSlot(void)
 {
-    // bool bRtn = m_regExp.exactMatch( m_editBefore->toPlainText() );
-    // QString pattern("[0-9]*");
-    // // QRegExp rx(pattern);
-    // QRegExp rx;
-    // rx.setPattern( pattern );
-
-    // bool bRtn = rx.exactMatch(m_editBefore->toPlainText());
-    // m_regExp.setPattern( "[0-9]*" );
     // 清空
     m_editAfter->clear( );
     // 获取
@@ -505,8 +499,10 @@ void CCheck::ConvertionSlot(void)
 QString CCheck::GetCheckString(void)
 {
     QString str;
-    QString strSep = GetSepString( );
     str = GetModeString();
+
+    // QString strInput = m_editBefore->toPlainText();
+    str += GetConvertString();
 
     return str;
 }   /*-------- end class CCheck method GetCheckString -------- */
@@ -605,3 +601,210 @@ QString CCheck::GetModeString(void)
 
     return str;
 }   /*-------- end class CCheck method GetModeString -------- */
+
+/*******************************************************************************
+ * 类:CCheck
+ * 函数名:GetConvertString
+ * 功能描述:获取转化后的报文
+ * 参数:void
+ * 被调用:GetCheckString
+ * 返回值:QString
+ ******************************************************************************/
+QString CCheck::GetConvertString(void)
+{
+    QString str;
+    QString strSep = GetSepString( );
+    str = m_editBefore->toPlainText();
+    if ( str.isEmpty() )
+    {
+        return str;
+    }
+
+    unsigned char *pBuf = new unsigned char[ str.count() + 20 ];
+    unsigned int iBufLen = 0;
+    // unsigned char buf[2048] = "";
+    if ( "" != strSep)
+    {
+        QStringList list = str.split( QRegExp(strSep) );
+        for (int i=0; i < list.count(); i++)
+        {
+            bool ok;
+            QString s = list.at(i );
+            if ( ok )
+            {
+                pBuf[iBufLen++] = s.toInt(&ok,16);
+                // printf("%2x \n", pBuf[i]);
+            }
+        }
+    }
+    else
+    {
+        int len = str.count();
+        if ( 1 == len % 2)
+        {
+            len = len + 1;
+        }
+        int max = len / 2;
+
+        for ( int i=0; i < max; i++)
+        {
+            bool ok;
+            int mid = 2 * i;
+            QString s = "";
+            if ( ( i == max - 1 ) & ( 1 == len % 2 ))
+            {
+                s = str.mid( mid, 1);
+            }
+            else
+            {
+                s = str.mid( mid, 2);
+            }
+
+            if ( ok )
+            {
+                pBuf[iBufLen++] = s.toInt(&ok,16);
+                // printf("%2x \n", pBuf[i]);
+            }
+        }
+
+    }
+
+    str = GetConvertCheckString( pBuf, iBufLen );
+    if( NULL != pBuf )
+    {
+        delete pBuf;
+        pBuf = NULL;
+    }
+
+    return str;
+}   /*-------- end class CCheck method GetConvertString -------- */
+
+/*******************************************************************************
+ * 类:CCheck
+ * 函数名:GetConvertCheckString
+ * 功能描述:获取校验后的str
+ * 参数:unsigned char *pBuf 16进制字符串
+ * 参数:unsigned int iBufLen  长度
+ * 被调用:GetConverString
+ * 返回值:QString
+ ******************************************************************************/
+QString CCheck::GetConvertCheckString(unsigned char *pBuf, unsigned int iBufLen )
+{
+    switch ( m_check)
+    {
+        case RADIO_CHECK_MODBUSCRC: // modbus crc
+            {
+                return GetModbusCrcString( pBuf, iBufLen );
+            }
+            break;
+
+        case RADIO_CHECK_SUM: // modbus crc
+            {
+                return GetSumString( pBuf, iBufLen );
+            }
+            break;
+
+        case RADIO_CHECK_SUMNEGATE: // modbus crc
+            {
+                return GetSumNeGateString( pBuf, iBufLen );
+            }
+            break;
+        default:
+            break;
+    }
+
+    return "";
+}   /*-------- end class CCheck method GetConvertCheckString -------- */
+
+/*******************************************************************************
+ * 类:CCheck
+ * 函数名:GetModbusCrcString
+ * 功能描述:modbus crc
+ * 参数:unsigned char *pBuf
+ * 参数:unsigned int iBufLen
+ * 被调用:
+ * 返回值:QString
+ ******************************************************************************/
+QString CCheck::GetModbusCrcString(unsigned char *pBuf, unsigned int iBufLen )
+{
+    unsigned short Genpoly=0xA001;
+    unsigned short CRC=0xFFFF;
+    unsigned short index;
+    while(iBufLen--)
+    {
+        CRC=CRC^(unsigned short)*pBuf++;
+        for(index=0;index<8;index++)
+        {
+            if((CRC & 0x0001)==1)
+                CRC=(CRC>>1)^Genpoly;
+            else
+                CRC=CRC>>1;
+        }
+    }
+
+    QString sep = GetSepString( );
+    QString str = sep
+                  +QString::number( ( CRC ) & 0xff, 16 )
+                  +sep
+                  + QString::number( ( CRC >> 8 ) & 0xff, 16 );
+
+    return str;
+}   /*-------- end class CCheck method GetModbusCrcString -------- */
+
+/*******************************************************************************
+ * 类:CCheck
+ * 函数名:GetSumString
+ * 功能描述:校验和
+ * 参数:unsigned char *pBuf
+ * 参数:unsigned int iBufLen
+ * 被调用:
+ * 返回值:QString
+ ******************************************************************************/
+QString CCheck::GetSumString(unsigned char *pBuf, unsigned int iBufLen)
+{
+    QString str = "";
+	unsigned char byRtn = 0x00;
+    unsigned int i;
+
+    if( pBuf == NULL || iBufLen <= 0 )
+		return str;
+
+	for ( i=0; i<iBufLen ; i++ )
+	{
+		byRtn += pBuf[i];
+	}
+
+    QString sep = GetSepString( );
+    str = sep + QString::number( byRtn, 16 );
+    return str;
+}   /*-------- end class CCheck method GetSumString -------- */
+
+/*******************************************************************************
+ * 类:CCheck
+ * 函数名:GetSumNegateString
+ * 功能描述:校验和
+ * 参数:unsigned char *pBuf
+ * 参数:unsigned int iBufLen
+ * 被调用:
+ * 返回值:QString
+ ******************************************************************************/
+QString CCheck::GetSumNeGateString(unsigned char *pBuf, unsigned int iBufLen)
+{
+    QString str = "";
+	unsigned char byRtn = 0x00;
+    unsigned int i;
+
+    if( pBuf == NULL || iBufLen <= 0 )
+		return str;
+
+	for ( i=0; i<iBufLen ; i++ )
+	{
+		byRtn += pBuf[i];
+	}
+
+    QString sep = GetSepString( );
+    unsigned char byRtnNegate = ~byRtn;
+    str = sep + QString::number( byRtnNegate, 16 );
+
+    return str;
+}   /*-------- end class CCheck method GetSumNeGateString -------- */
