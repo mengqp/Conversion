@@ -32,7 +32,7 @@ else
 	CONFIG="CONFIG+=release"
 fi
 
-$QMAKE -project -Wall  -o  ./Convert.pro -after "QT += core gui widgets" "TARGET=./Debug/Convert" $CONFIG  "OBJECTS_DIR = ./Debug/OBJ/" "MOC_DIR = Debug/moc/" "UI_DIR=Debug/ui"
+$QMAKE -project -Wall  -o  ./Convert.pro -after "QT += core gui widgets" "TARGET=./Debug/Convert" $CONFIG  "OBJECTS_DIR = ./Debug/OBJ/" "MOC_DIR = Debug/moc/" "UI_DIR=Debug/ui" "RC_FILE = conversion.rc"
 $QMAKE -makefile ./Convert.pro  -o ./Makefile
 
 make
