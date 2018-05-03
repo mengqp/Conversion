@@ -71,6 +71,7 @@ CCheck::~CCheck (void)
  ******************************************************************************/
 bool CCheck::InitUi(void)
 {
+    m_editBefore = NULL;
     if ( !InitUiSeparator( ) )
     {
         m_widgetMain->MsgBox( "CCheck::InitUiSeparator error!\n");
@@ -555,17 +556,17 @@ QString CCheck::GetSepString(void)
     if (0 == iRtn )
     {
         m_widgetMain->MsgBox( FROMLOCAL("您输入的内容不符合规则"));
-        //获取当前文本光标
-        QTextCursor cursor = m_editBefore->textCursor();
-        //将光标移动到文本结尾，便于删除字符测试，实际上并不需要该步骤
-        cursor.movePosition(QTextCursor::End);
-        //判断当前是否选中了文本，如果选中了文本则取消选中的文本，再删除前一个字符
-        if(cursor.hasSelection())
-            cursor.clearSelection();
-        //删除前一个字符
-        cursor.deletePreviousChar();
-        //设置当前的光标为更改后的光标
-        m_editBefore->setTextCursor(cursor);
+        // //获取当前文本光标
+        // QTextCursor cursor = m_editBefore->textCursor();
+        // //将光标移动到文本结尾，便于删除字符测试，实际上并不需要该步骤
+        // cursor.movePosition(QTextCursor::End);
+        // //判断当前是否选中了文本，如果选中了文本则取消选中的文本，再删除前一个字符
+        // if(cursor.hasSelection())
+        //     cursor.clearSelection();
+        // //删除前一个字符
+        // cursor.deletePreviousChar();
+        // //设置当前的光标为更改后的光标
+        // m_editBefore->setTextCursor(cursor);
     }
 
     return str;
